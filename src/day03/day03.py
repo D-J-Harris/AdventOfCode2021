@@ -1,10 +1,8 @@
 from statistics import multimode
 
 if __name__ == "__main__":
-
     numbers = []
     with open('inputs/input-03.txt', 'r') as f:
-
         for b in f.read().splitlines():
             numbers.append(b)
 
@@ -30,4 +28,3 @@ if __name__ == "__main__":
 
     print(f'answer to puzzle 1 is {ans1}')
     print(f'answer to puzzle 2 is {ans2}')
-

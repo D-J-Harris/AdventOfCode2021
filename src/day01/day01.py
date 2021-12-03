@@ -1,11 +1,9 @@
-import os
-import sys
 
 if __name__ == "__main__":
 
     ans1 = 0
     ans2 = 0
-    with open(os.path.join(sys.path[0], 'input.txt'), 'r') as f:
+    with open('inputs/input-01.txt', 'r') as f:
         inp = []
         for num in f.read().splitlines():
             inp.append(int(num))

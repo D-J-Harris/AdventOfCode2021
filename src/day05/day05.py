@@ -1,4 +1,5 @@
 import numpy as np
+from itertools import repeat
 
 if __name__ == "__main__":
 
@@ -15,27 +16,21 @@ if __name__ == "__main__":
 
     def solve(grid, is_part_2):
         for pair in pairs:
-            x_start, y_start = pair[0]
-            x_end, y_end = pair[1]
-            
+            (x_start, y_start), (x_end, y_end) = pair[0], pair[1]
+            x_rev = 2 * (x_start < x_end) - 1
+            y_rev = 2 * (y_start < y_end) - 1
+            x_range = range(x_start, x_end + x_rev, x_rev)
+            y_range = range(y_start, y_end + y_rev, y_rev)
             if x_start == x_end:
-                if y_start < y_end:
-                    grid[x_start, y_start:y_end+1] += 1
-                else:
-                    grid[x_start, y_end:y_start+1] += 1
+                for x, y in zip(repeat(x_start), y_range):
+                    grid[x, y] += 1
             elif y_start == y_end:
-                if x_start < x_end:
-                    grid[x_start:x_end+1, y_start] += 1
-                else:
-                    grid[x_end:x_start+1, y_start] += 1
+                for x, y in zip(x_range, repeat(y_start)):
+                    grid[x, y] += 1
             else:
-                if is_part_2:
-                    x_rev = 2 * (x_start < x_end) - 1
-                    y_rev = 2 * (y_start < y_end) - 1
-                    for x, y in zip(range(x_start, x_end + x_rev, x_rev), range(y_start, y_end + y_rev, y_rev)):
+                if is_part_2: 
+                    for x, y in zip(x_range, y_range):
                         grid[x, y] += 1
-                else:
-                    continue
         return np.count_nonzero(grid > 1)
 
     grid = np.zeros((max_x+1, max_y+1))

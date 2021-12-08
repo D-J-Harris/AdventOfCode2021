@@ -10,7 +10,6 @@ if __name__ == "__main__":
 
     def input_to_code(lst):
         code = {}
-        lst_left = []
         for num in lst:
             num = ''.join(sorted(num))
             match len(num):
@@ -22,9 +21,8 @@ if __name__ == "__main__":
                     code['4'] = num
                 case 7:
                     code['8'] = num
-                case _:
-                    lst_left.append(num)
-        for num in lst_left:
+                case _: pass
+        for num in lst:
             num = ''.join(sorted(num))
             match len(num):
                 case 5:
@@ -41,8 +39,7 @@ if __name__ == "__main__":
                         code['0'] = num
                     else:
                         code['6'] = num
-                case _:
-                    pass
+                case _: pass
         return code
 
     ans1 = 0

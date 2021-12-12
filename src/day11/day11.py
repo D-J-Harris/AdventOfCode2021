@@ -11,6 +11,7 @@ if __name__ == "__main__":
             self.width = len(self.grid[0])
             self.flashes = 0
             self.num_steps = 0
+            self.syc_steps = []
 
         def neighbours(self, x, y):
             lx, ly = self.height, self.width
@@ -36,9 +37,8 @@ if __name__ == "__main__":
                 self.flashes += 1
                 self.grid[x][y] = 0
             self.num_steps += 1
-
-            # returns step number if step was 'synchronised'
-            return self.num_steps if len(to_reset) == self.width * self.height else None
+            if len(to_reset) == self.width * self.height:
+                self.syc_steps.append(self.num_steps)
 
     rows = []
     with open('inputs/input-11.txt', 'r') as f:
@@ -47,16 +47,13 @@ if __name__ == "__main__":
         grid = Grid(np.array(rows))
 
     num_steps = 100
-    sync_steps = []
     for _ in range(num_steps):
-        if step := grid.step():
-            sync_steps.append(step)
+        grid.step()
     ans1 = grid.flashes
 
-    while not sync_steps:
-        if step := grid.step():
-            sync_steps.append(step)
+    while not grid.syc_steps:
+        grid.step()
     
-    ans2 = sync_steps[0]
+    ans2 = grid.syc_steps[0]
     print(f'answer to puzzle 1 is {ans1}')
     print(f'answer to puzzle 2 is {ans2}')

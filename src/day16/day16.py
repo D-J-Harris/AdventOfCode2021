@@ -24,12 +24,16 @@ if __name__ == "__main__":
                 f'size: {self.size}\n' +
                 f'value: {self.value}')
 
-
     def parse(binary, parent):
         ptr = 0
+        
+        global version_sum
         version = int(binary[ptr: (ptr := ptr + 3)], 2)
+        version_sum += version
+
         packet_type = int(binary[ptr: (ptr := ptr + 3)], 2)
         packet = Packet(version, packet_type, parent)
+        
 
         if packet.is_literal:
             num = ''
@@ -67,12 +71,8 @@ if __name__ == "__main__":
             return packet, binary[ptr:]
 
 
-    def version_sum(root_packet):
-        ans = root_packet.version
-        for child in root_packet.children:
-            ans += version_sum(child)
-        return ans
+    version_sum = 0
 
     outer_packet, _ = parse(puzzle_binary, None)
-    print(f'answer to puzzle 1 is {version_sum(outer_packet)}')
+    print(f'answer to puzzle 1 is {version_sum}')
     print(f'answer to puzzle 2 is {outer_packet.value}')

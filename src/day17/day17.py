@@ -49,10 +49,6 @@ if __name__ == "__main__":
     x_vels = get_x_vels(xs_range)   
     y_vels = get_y_vels(ys_range)
 
-    print(x_vels)
-    print('\n')
-    print(y_vels)
-
     specials = [6, 7]
 
     ans = 0
@@ -62,6 +58,8 @@ if __name__ == "__main__":
             for x_vel, y_vel in product(x_vels[steps], vals):
                 ans += 1 if (x_vel, y_vel) not in visited else 0
                 visited.add((x_vel, y_vel))
+            ans += sum([steps > x for x in specials])
         else:
-            ans += sum([x * len(vals) for x in specials if steps > x])
+            ans += len(vals) * len(specials)
+
     print(ans)

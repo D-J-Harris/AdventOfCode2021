@@ -1,11 +1,15 @@
 from collections import defaultdict
 from itertools import product
+import re
 
 if __name__ == "__main__":
 
-    xs_range = list(range(269, 293))
-    ys_range = list(range(-68, -43))
-    max_yvel = 67  # answer to part 1; max y velocity
+    with open('inputs/input-17.txt', 'r') as f:
+        pattern = r'[xy]=(-?\d+)..(-?\d+)'
+        res = re.findall(pattern, f.readline().strip())
+        xs_range = list(range(int(res[0][0]), int(res[0][1]) + 1))
+        ys_range = list(range(int(res[1][0]), int(res[1][1]) + 1))
+    max_yvel = - (ys_range[0] + 1)  # answer to part 1; max y velocity
 
     # x velocities that stop in target area
     settled_xvels, n = [], 1
